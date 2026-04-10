@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+
+# Virtual environments
+.env
+.venv
+env/
+venv/
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
+
+# Model weights (large binary files - download separately)
+*.pth
+*.pt
+*.ckpt
+
+# Output directories (generated at runtime)
+output/
+test_output/
+
+# Data (download via kagglehub)
+data/
+
+# Colab-specific
+/content/
+
+# OS files
+.DS_Store
+Thumbs.db

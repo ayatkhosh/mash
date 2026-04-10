@@ -1,0 +1,151 @@
+# =============================================================================
+# configs/processing_config.yaml
+# إعدادات معالجة الصور والمعالجة البعدية - UrbanInsight
+# Image Processing and Post-Processing Configuration - UrbanInsight
+# =============================================================================
+
+# ─────────────────────────────────────────────
+# إعدادات تحميل الصور
+# Image Loading Settings
+# ─────────────────────────────────────────────
+image_loading:
+  # الصيغ المدعومة / Supported formats
+  supported_formats:
+    - ".tif"
+    - ".tiff"
+    - ".png"
+    - ".jpg"
+    - ".jpeg"
+
+  # الحجم الأقصى للصورة (أي بُعد) / Max image size (any dimension)
+  max_image_size: 2048       # بكسل / pixels
+
+  # الحجم المستهدف للمعالجة (null = بدون تغيير حجم)
+  # Target processing size (null = no resize)
+  target_size: null          # مثال: [512, 512]
+
+  # تطبيع قيم البكسل إلى [0,1] / Normalize pixel values to [0,1]
+  normalize: true
+
+  # حجم الدفعة / Batch size
+  batch_size: 4
+
+
+# ─────────────────────────────────────────────
+# إعدادات الكشف (DINO)
+# Detection Settings (DINO)
+# ─────────────────────────────────────────────
+detection:
+  # حد الثقة لقبول الكشف / Minimum confidence for detection acceptance
+  min_confidence: 0.30
+
+  # حد الثقة العالية (للمباني الواضحة فقط) / High confidence threshold
+  high_confidence: 0.50
+
+  # حد IoU لإزالة التكرار (NMS) / IoU threshold for duplicate removal (NMS)
+  nms_iou_threshold: 0.45
+
+  # الحد الأدنى للمساحة بعد الكشف (بكسل مربع) / Min area after detection
+  min_detection_area: 50     # بكسل² / pixels²
+
+  # الحد الأقصى لعدد الكشوفات في كل صورة / Max detections per image
+  max_detections_per_image: 200
+
+
+# ─────────────────────────────────────────────
+# إعدادات التقسيم (SAM)
+# Segmentation Settings (SAM)
+# ─────────────────────────────────────────────
+segmentation:
+  # حد IoU لدمج الأقنعة المتداخلة / IoU threshold for merging overlapping masks
+  merge_iou_threshold: 0.50
+
+  # المساحة الدنيا للقناع بعد التقسيم (بكسل) / Min mask area after segmentation
+  min_mask_area: 100         # بكسل / pixels
+
+  # المساحة القصوى للقناع / Max mask area
+  max_mask_area: null        # null = بدون حد أقصى / no upper limit
+
+  # فصل المباني المتلاصقة / Separate adjacent buildings
+  split_adjacent: true
+
+  # حد المساحة الدنيا لفصل المباني المتلاصقة / Min area for split buildings
+  split_min_area: 200
+
+
+# ─────────────────────────────────────────────
+# إعدادات المعالجة البعدية (PostProcessor)
+# Post-Processing Settings (PostProcessor)
+# ─────────────────────────────────────────────
+post_processing:
+  # المساحة الدنيا للقناع (إزالة الضوضاء الصغيرة) / Min area (noise removal)
+  min_area: 100              # بكسل / pixels
+
+  # المساحة القصوى للقناع (null = بدون حد) / Max area (null = no limit)
+  max_area: null
+
+  # حجم نواة التنعيم المورفولوجي / Morphological smoothing kernel size
+  smoothing_kernel: 3        # يجب أن تكون فردية / must be odd
+
+  # تكرارات عملية الإغلاق (سد الثغرات) / Closing iterations (gap filling)
+  closing_iterations: 2
+
+  # تكرارات عملية الفتح (إزالة الضوضاء) / Opening iterations (noise removal)
+  opening_iterations: 1
+
+  # ملء الثقوب الداخلية / Fill internal holes
+  fill_holes: true
+
+  # إزالة الأقنعة على حواف الصورة / Remove border-touching masks
+  remove_border_masks: false
+
+
+# ─────────────────────────────────────────────
+# إعدادات توليد المعرفات
+# ID Generation Settings
+# ─────────────────────────────────────────────
+id_generation:
+  # بادئة المعرف / ID prefix
+  prefix: "BLD"
+
+  # معرف المشروع / Project ID
+  project_id: "UrbanInsight"
+
+  # استخدام UUID / Use UUID
+  use_uuid: true
+
+  # مجلد حفظ ملفات JSON / JSON output directory
+  output_dir: "/content/output/buildings"
+
+  # اسم ملف الإخراج / Output filename
+  output_filename: "buildings_data.json"
+
+
+# ─────────────────────────────────────────────
+# إعدادات التصوير والحفظ
+# Visualization and Export Settings
+# ─────────────────────────────────────────────
+visualization:
+  # حفظ الصور التوضيحية / Save visualization images
+  save_visualizations: true
+
+  # مجلد الإخراج / Output directory
+  output_dir: "/content/output/visualizations"
+
+  # صيغة الحفظ / Save format: 'png' | 'jpg'
+  format: "png"
+
+  # الشفافية في عرض الأقنعة / Mask transparency in visualization
+  mask_alpha: 0.4
+
+  # عرض الصندوق المحيط / Show bounding boxes
+  show_boxes: true
+
+  # عرض المعرفات / Show IDs
+  show_ids: true
+
+  # حجم الشكل / Figure size [عرض، ارتفاع] بالإنش / [width, height] in inches
+  figure_size: [17, 8]
+
+  # لون الخلفية / Background color
+  background_color: "#1a1a2e"
