@@ -1,0 +1,86 @@
+# =============================================================================
+# configs/model_config.yaml
+# إعدادات النماذج المستخدمة في مشروع UrbanInsight
+# Model Configuration for UrbanInsight Project
+# =============================================================================
+
+# ─────────────────────────────────────────────
+# نموذج Grounding DINO
+# Grounding DINO Model Settings
+# ─────────────────────────────────────────────
+grounding_dino:
+  # مسار أوزان النموذج / Model weights path
+  weights_path: "/content/weights/gdino.pth"
+
+  # مسار ملف الإعدادات / Config file path
+  config_path: "/content/GroundingDINO/groundingdino/config/GroundingDINO_SwinT_OGC.py"
+
+  # مسار مجلد GroundingDINO المثبّت / Installed GroundingDINO directory
+  repo_path: "/content/GroundingDINO"
+
+  # رابط تحميل الأوزان / Weights download URL
+  weights_url: "https://github.com/IDEA-Research/GroundingDINO/releases/download/v0.1.0-alpha/groundingdino_swint_ogc.pth"
+
+  # معاملات الكشف / Detection thresholds
+  box_threshold: 0.30       # حد الثقة لصناديق الكشف / Detection box confidence threshold
+  text_threshold: 0.25      # حد الثقة لتطابق النص / Text matching confidence threshold
+
+  # جهاز التشغيل / Computation device
+  device: "auto"            # 'auto' | 'cuda' | 'cpu'
+
+
+# ─────────────────────────────────────────────
+# نموذج SAM (Segment Anything Model)
+# SAM Model Settings
+# ─────────────────────────────────────────────
+sam:
+  # نوع النموذج / Model type: 'vit_h' (الأقوى/strongest) | 'vit_l' | 'vit_b' (الأخف/lightest)
+  model_type: "vit_h"
+
+  # مسار أوزان النموذج / Model weights path
+  checkpoint_path: "/content/weights/sam_vit_h_4b8939.pth"
+
+  # روابط تحميل الأوزان / Weights download URLs
+  weights_urls:
+    vit_h: "https://dl.fbaipublicfiles.com/segment_anything/sam_vit_h_4b8939.pth"
+    vit_l: "https://dl.fbaipublicfiles.com/segment_anything/sam_vit_l_0b3195.pth"
+    vit_b: "https://dl.fbaipublicfiles.com/segment_anything/sam_vit_b_01ec64.pth"
+
+  # جهاز التشغيل / Computation device
+  device: "auto"            # 'auto' | 'cuda' | 'cpu'
+
+  # استخدام عدة أقنعة لكل صندوق / Use multiple masks per box
+  multimask_output: false
+
+  # إعدادات التوليد التلقائي / Automatic generation settings
+  auto_mask:
+    points_per_side: 32
+    pred_iou_thresh: 0.86
+    stability_score_thresh: 0.92
+    crop_n_layers: 1
+    crop_n_points_downscale_factor: 2
+    min_mask_region_area: 100
+
+
+# ─────────────────────────────────────────────
+# إعدادات عامة للبيئة
+# General Environment Settings
+# ─────────────────────────────────────────────
+environment:
+  # مجلد حفظ الأوزان / Weights storage directory
+  weights_dir: "/content/weights"
+
+  # مجلد الإخراج / Output directory
+  output_dir: "/content/output"
+
+  # مجلد البيانات / Data directory
+  data_dir: "/content/data"
+
+  # استخدام الذاكرة المؤقتة / Use cache
+  use_cache: true
+
+  # مستوى التسجيل / Logging level: DEBUG | INFO | WARNING | ERROR
+  log_level: "INFO"
+
+  # البذرة العشوائية للتكرارية / Random seed for reproducibility
+  random_seed: 42

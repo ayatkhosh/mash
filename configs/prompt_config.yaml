@@ -1,0 +1,96 @@
+# =============================================================================
+# configs/prompt_config.yaml
+# إعدادات النصوص (Prompts) المستخدمة في الكشف - UrbanInsight
+# Detection Prompts Configuration - UrbanInsight
+# =============================================================================
+
+# ─────────────────────────────────────────────
+# نصوص الكشف بالإنجليزية (المستخدمة مع DINO)
+# Detection Prompts in English (used with DINO)
+# ─────────────────────────────────────────────
+prompts:
+
+  # ─── كشف المباني / Building Detection ───────────────────────────────
+  buildings:
+    primary: "building . rooftop . house . structure . construction"
+    detailed: >
+      building . rooftop . residential building . commercial building .
+      industrial building . house . structure . construction . roof .
+      apartment block . warehouse
+    simple: "building"
+    # ملاحظة / Note: استخدم 'primary' للحصول على أفضل توازن بين الدقة والسرعة
+    # Use 'primary' for the best balance between accuracy and speed
+
+  # ─── كشف النباتات / Vegetation Detection ────────────────────────────
+  vegetation:
+    primary: "tree . vegetation . garden . grass . plant . park"
+    detailed: >
+      tree . vegetation . garden . grass . plant . park . forest .
+      bush . shrub . lawn . greenery . farmland . agricultural field
+    simple: "tree . grass"
+
+  # ─── كشف الفراغات المفتوحة / Open Spaces Detection ─────────────────
+  open_spaces:
+    primary: "road . parking . empty lot . open area . courtyard"
+    detailed: >
+      road . street . highway . parking lot . parking area .
+      empty lot . open area . courtyard . plaza . square .
+      paved surface . driveway
+    simple: "road . parking"
+
+  # ─── كشف شامل (جميع العناصر) / Comprehensive Detection ──────────────
+  all_urban:
+    primary: >
+      building . rooftop . house . tree . vegetation .
+      road . parking . open area
+    detailed: >
+      building . rooftop . house . apartment . tree . vegetation .
+      garden . road . street . parking . empty lot . open area .
+      courtyard . water body . pool
+
+  # ─── كشف مخصص للمناطق الصناعية / Industrial Area Detection ──────────
+  industrial:
+    primary: "factory . warehouse . industrial building . storage tank"
+    detailed: >
+      factory . warehouse . industrial building . storage tank .
+      manufacturing plant . silo . industrial facility
+
+  # ─── كشف المياه / Water Body Detection ──────────────────────────────
+  water:
+    primary: "water . river . lake . pool . pond"
+    detailed: "water body . river . lake . swimming pool . pond . reservoir"
+
+
+# ─────────────────────────────────────────────
+# الإعداد الافتراضي للكشف
+# Default Detection Configuration
+# ─────────────────────────────────────────────
+defaults:
+  # النص الافتراضي للكشف / Default prompt variant to use
+  # الخيارات / Options: 'primary' | 'detailed' | 'simple'
+  prompt_variant: "primary"
+
+  # الفئات المفعّلة افتراضياً / Default enabled categories
+  active_categories:
+    - buildings
+    - vegetation
+    - open_spaces
+
+  # الفئة الرئيسية للتحليل / Primary analysis category
+  primary_category: "buildings"
+
+
+# ─────────────────────────────────────────────
+# ملاحظات الاستخدام / Usage Notes
+# ─────────────────────────────────────────────
+# usage_notes:
+#   ar: |
+#     - استخدم 'primary' للمعالجة العادية لتحقيق التوازن بين الدقة والسرعة
+#     - استخدم 'detailed' لتحسين الكشف في المناطق المعقدة
+#     - استخدم 'simple' للاختبار السريع
+#     - يمكن تعديل هذه النصوص حسب نوع المنطقة المدروسة
+#   en: |
+#     - Use 'primary' for normal processing (best speed/accuracy balance)
+#     - Use 'detailed' for improved detection in complex areas
+#     - Use 'simple' for quick testing
+#     - These prompts can be customized based on the study area type
